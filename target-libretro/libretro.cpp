@@ -488,16 +488,16 @@ void retro_set_environment(retro_environment_t environ_cb)
    core_bind.penviron = environ_cb;
 
    static const struct retro_variable vars[] = {
-      { "bsnes_violate_accuracy", "Allow settings to reduce accuracy; disabled|enabled" },
-      { "bsnes_chip_hle", "Special chip accuracy; LLE|HLE" },
-      { "bsnes_superfx_overclock", "SuperFX speed; 100%|150%|200%|300%|400%|500%|1000%" },
+      { "bsnes_violate_accuracy", "允许设置降低模拟精确度; disabled|enabled" },
+      { "bsnes_chip_hle", "特殊芯片模拟精确度; LLE|HLE" },
+      { "bsnes_superfx_overclock", "SuperFX速度; 100%|150%|200%|300%|400%|500%|1000%" },
          //Any integer is usable here, but there is no such thing as "any integer" in core options.
-      { "bsnes_region", "System region; auto|ntsc|pal" },
-      { "bsnes_aspect_ratio", "Preferred aspect ratio; auto|ntsc|pal" },
-      { "bsnes_crop_overscan", "Crop overscan; disabled|enabled" }, 
-      { "bsnes_gamma_ramp", "Gamma ramp (requires restart); disabled|enabled" },
+      { "bsnes_region", "系统制式; auto|ntsc|pal" },
+      { "bsnes_aspect_ratio", "输出宽高比; auto|ntsc|pal" },
+      { "bsnes_crop_overscan", "切除过扫描区域; disabled|enabled" }, 
+      { "bsnes_gamma_ramp", "Gamma调节（须要重启）; disabled|enabled" },
 #ifdef EXPERIMENTAL_FEATURES
-      { "bsnes_sgb_core", "Super Game Boy core; Internal|Gambatte" },
+      { "bsnes_sgb_core", "Super Game Boy内核; Internal|Gambatte" },
 #endif
       { NULL, NULL },
    };
