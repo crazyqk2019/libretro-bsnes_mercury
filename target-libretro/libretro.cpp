@@ -423,7 +423,7 @@ struct Callbacks : Emulator::Interface::Bind {
 #ifdef EXPERIMENTAL_FEATURES
     if (item==SuperFamicom::Alt::ForSuperGameBoy)
     {
-      if (!strcmp(read_opt("bsnes_sgb_core", "Internal"), "Gambatte")) return SuperFamicom::Alt::SuperGameBoy::External;
+      if (!strcmp(read_opt("bsnes_sgb_core", "内部"), "Gambatte")) return SuperFamicom::Alt::SuperGameBoy::External;
       else return SuperFamicom::Alt::SuperGameBoy::Internal;
     }
 #endif
@@ -435,9 +435,9 @@ static Callbacks core_bind;
 
 static const char * read_opt(const char * name, const char * defval)
 {
-	struct retro_variable allowvar = { "bsnes_violate_accuracy", "disabled" };
+	struct retro_variable allowvar = { "bsnes_violate_accuracy", "禁用" };
 	core_bind.penviron(RETRO_ENVIRONMENT_GET_VARIABLE, (void*)&allowvar);
-	if (!strcmp(allowvar.value, "enabled"))
+	if (!strcmp(allowvar.value, "启用"))
 	{
 		struct retro_variable var = {name, defval};
 		core_bind.penviron(RETRO_ENVIRONMENT_GET_VARIABLE, (void*)&var);
@@ -488,16 +488,16 @@ void retro_set_environment(retro_environment_t environ_cb)
    core_bind.penviron = environ_cb;
 
    static const struct retro_variable vars[] = {
-      { "bsnes_violate_accuracy", "允许设置降低模拟精确度; disabled|enabled" },
+      { "bsnes_violate_accuracy", "允许降低模拟精确度; 禁用|启用" },
       { "bsnes_chip_hle", "特殊芯片模拟精确度; LLE|HLE" },
       { "bsnes_superfx_overclock", "SuperFX速度; 100%|150%|200%|300%|400%|500%|1000%" },
          //Any integer is usable here, but there is no such thing as "any integer" in core options.
-      { "bsnes_region", "系统制式; auto|ntsc|pal" },
-      { "bsnes_aspect_ratio", "输出宽高比; auto|ntsc|pal" },
-      { "bsnes_crop_overscan", "切除过扫描区域; disabled|enabled" }, 
-      { "bsnes_gamma_ramp", "Gamma调节（须要重启）; disabled|enabled" },
+      { "bsnes_region", "系统制式; 自动|NTSC|PAL" },
+      { "bsnes_aspect_ratio", "输出宽高比; 自动|NTSC|PAL" },
+      { "bsnes_crop_overscan", "切除过扫描区域; 禁用|启用" }, 
+      { "bsnes_gamma_ramp", "Gamma调节（须重启）; 禁用|启用" },
 #ifdef EXPERIMENTAL_FEATURES
-      { "bsnes_sgb_core", "Super Game Boy内核; Internal|Gambatte" },
+      { "bsnes_sgb_core", "Super Game Boy内核; 内部|Gambatte" },
 #endif
       { NULL, NULL },
    };
@@ -582,25 +582,25 @@ static void update_variables(void) {
       SuperFamicom::superfx.frequency=(uint64)superfx_freq_orig*percent/100;
    }
 
-   struct retro_variable overscan_var = { "bsnes_crop_overscan", "disabled" };
+   struct retro_variable overscan_var = { "bsnes_crop_overscan", "禁用" };
    core_bind.penviron(RETRO_ENVIRONMENT_GET_VARIABLE, (void*)&overscan_var);
-   if (strcmp(overscan_var.value, "enabled") == 0)
+   if (strcmp(overscan_var.value, "启用") == 0)
      core_bind.crop_overscan = true;
    else
      core_bind.crop_overscan = false;
      
-   struct retro_variable gamma_ramp_var = { "bsnes_gamma_ramp", "disabled" };
+   struct retro_variable gamma_ramp_var = { "bsnes_gamma_ramp", "禁用" };
    core_bind.penviron(RETRO_ENVIRONMENT_GET_VARIABLE, (void*)&gamma_ramp_var);
-   if (strcmp(gamma_ramp_var.value, "enabled") == 0)
+   if (strcmp(gamma_ramp_var.value, "启用") == 0)
      core_bind.gamma_ramp = true;
    else
      core_bind.gamma_ramp = false;
 
-   struct retro_variable region_var = { "bsnes_region", "auto" };
+   struct retro_variable region_var = { "bsnes_region", "自动" };
    core_bind.penviron(RETRO_ENVIRONMENT_GET_VARIABLE, (void*)&region_var);
-   if (strcmp(region_var.value, "ntsc") == 0)
+   if (strcmp(region_var.value, "NTSC") == 0)
      core_bind.region_mode = 1;
-   else if (strcmp(region_var.value, "pal") == 0)
+   else if (strcmp(region_var.value, "PAL") == 0)
      core_bind.region_mode = 2;
    else
      core_bind.region_mode = 0;
@@ -613,11 +613,11 @@ static void update_variables(void) {
      SuperFamicom::configuration.region = SuperFamicom::System::Region::Autodetect;
 
    unsigned short old_aspect_ratio_mode = core_bind.aspect_ratio_mode;
-   struct retro_variable aspect_ratio_var = { "bsnes_aspect_ratio", "auto" };
+   struct retro_variable aspect_ratio_var = { "bsnes_aspect_ratio", "自动" };
    core_bind.penviron(RETRO_ENVIRONMENT_GET_VARIABLE, (void*)&aspect_ratio_var);
-   if (strcmp(aspect_ratio_var.value, "ntsc") == 0)
+   if (strcmp(aspect_ratio_var.value, "NTSC") == 0)
      core_bind.aspect_ratio_mode = 1;
-   else if (strcmp(aspect_ratio_var.value, "pal") == 0)
+   else if (strcmp(aspect_ratio_var.value, "PAL") == 0)
      core_bind.aspect_ratio_mode = 2;
    else
      core_bind.aspect_ratio_mode = 0;
