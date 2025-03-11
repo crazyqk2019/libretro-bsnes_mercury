@@ -8,8 +8,8 @@ namespace Math {
 
 #if defined(_WIN32)
   //minimum version needed for _wstat64, etc
-  #undef  __MSVCRT_VERSION__
-  #define __MSVCRT_VERSION__ 0x0601
+  //#undef  __MSVCRT_VERSION__
+  //#define __MSVCRT_VERSION__ 0x0601
   #include <nall/windows/utf8.hpp>
 #endif
 
